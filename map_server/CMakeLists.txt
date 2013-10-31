@@ -6,7 +6,6 @@ find_package(catkin REQUIRED
             roscpp
             tf
             nav_msgs
-            rostest
         )
 
 find_package(Boost REQUIRED COMPONENTS system)
@@ -45,24 +44,6 @@ function(copy_test_data)
         file(COPY ${datafile} DESTINATION ${PROJECT_BINARY_DIR}/test)
     endforeach()
 endfunction()
-
-## Tests
-if(CATKIN_ENABLE_TESTING)
-  copy_test_data( FILES
-      test/testmap.bmp
-      test/testmap.png )
-  catkin_add_gtest(${PROJECT_NAME}_utest test/utest.cpp test/test_constants.cpp)
-  target_link_libraries(${PROJECT_NAME}_utest image_loader SDL SDL_image)
-
-  add_executable(rtest test/rtest.cpp test/test_constants.cpp)
-  target_link_libraries( rtest
-      gtest
-      ${catkin_LIBRARIES}
-  )
-  add_dependencies(rtest nav_msgs_gencpp)
-
-  add_rostest(test/rtest.xml)
-endif()
 
 ## Install executables and/or libraries
 install(TARGETS map_server-map_saver map_server image_loader

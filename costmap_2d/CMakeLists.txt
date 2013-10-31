@@ -10,8 +10,6 @@ find_package(catkin REQUIRED
             message_filters
             message_generation
             nav_msgs
-            pcl_conversions
-            pcl_ros
             pluginlib
             roscpp
             sensor_msgs
@@ -69,7 +67,6 @@ catkin_package(
         message_filters
         message_runtime
         nav_msgs
-        pcl_ros
         pluginlib
         roscpp
         sensor_msgs
@@ -77,7 +74,6 @@ catkin_package(
         tf
         voxel_grid
     DEPENDS
-        PCL
         Eigen
         Boost
 )
