@@ -5,7 +5,6 @@ find_package(catkin REQUIRED
         COMPONENTS
             dynamic_reconfigure
             geometry_msgs
-            laser_geometry
             map_msgs
             message_filters
             message_generation
@@ -50,7 +49,6 @@ generate_dynamic_reconfigure_options(
   cfg/ObstaclePlugin.cfg
   cfg/GenericPlugin.cfg
   cfg/InflationPlugin.cfg
-  cfg/VoxelPlugin.cfg
 )
 
 catkin_package(
@@ -62,7 +60,6 @@ catkin_package(
     CATKIN_DEPENDS
         dynamic_reconfigure
         geometry_msgs
-        laser_geometry
         map_msgs
         message_filters
         message_runtime
@@ -101,7 +98,6 @@ add_library(layers
   plugins/inflation_layer.cpp
   plugins/obstacle_layer.cpp
   plugins/static_layer.cpp
-  plugins/voxel_layer.cpp
   src/observation_buffer.cpp
 )
 target_link_libraries(layers

@@ -22,7 +22,6 @@
 
     <build_depend>dynamic_reconfigure</build_depend>
     <build_depend>geometry_msgs</build_depend>
-    <build_depend>laser_geometry</build_depend>
     <build_depend>map_msgs</build_depend>
     <build_depend>message_filters</build_depend>
     <build_depend>message_generation</build_depend>
@@ -38,7 +37,6 @@
 
     <run_depend>dynamic_reconfigure</run_depend>
     <run_depend>geometry_msgs</run_depend>
-    <run_depend>laser_geometry</run_depend>
     <run_depend>map_msgs</run_depend>
     <run_depend>message_filters</run_depend>
     <run_depend>message_runtime</run_depend>
