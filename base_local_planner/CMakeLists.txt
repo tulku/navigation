@@ -114,6 +114,7 @@ install(TARGETS
             base_local_planner
             trajectory_planner_ros
        LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+       ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
        )
 
 install(FILES blp_plugin.xml

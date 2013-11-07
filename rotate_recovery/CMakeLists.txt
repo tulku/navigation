@@ -32,6 +32,7 @@ target_link_libraries(rotate_recovery ${catkin_LIBRARIES})
 
 install(TARGETS rotate_recovery
        LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+       ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
        )
 
 install(FILES rotate_plugin.xml

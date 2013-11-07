@@ -48,6 +48,7 @@ install(DIRECTORY include/${PROJECT_NAME}/
 
 install(TARGETS move_slow_and_clear
        LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+       ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
        )
 
 install(FILES recovery_plugin.xml

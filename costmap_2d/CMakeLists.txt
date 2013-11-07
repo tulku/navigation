@@ -196,6 +196,7 @@ install(TARGETS
     costmap_2d
     layers
     LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+    ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 )
 
 install(FILES costmap_plugins.xml

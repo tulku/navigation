@@ -28,6 +28,7 @@ target_link_libraries(voxel_grid_sample
 
 install(TARGETS voxel_grid
        LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+       ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
        )
 
 install(DIRECTORY include/${PROJECT_NAME}/

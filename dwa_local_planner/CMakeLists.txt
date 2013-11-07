@@ -47,6 +47,7 @@ add_dependencies(dwa_local_planner nav_msgs_gencpp)
 
 install(TARGETS dwa_local_planner
        LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+       ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
        )
 
 install(FILES blp_plugin.xml
