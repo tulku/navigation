@@ -11,35 +11,41 @@ find_package(catkin REQUIRED
             tf
             message_filters
         )
-
-
 find_package(Boost REQUIRED COMPONENTS signals)
 
 catkin_package(
+    INCLUDE_DIRS include
+    LIBRARIES ${PROJECT_NAME}
     CATKIN_DEPENDS
         roscpp
-        rospy
 )
 
-include_directories(${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
+include_directories(include ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 
-add_executable(fake_localization fake_localization.cpp)
-target_link_libraries(fake_localization
+add_library(${PROJECT_NAME} src/fake_localization.cpp)
+target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+add_dependencies(${PROJECT_NAME} nav_msgs_gencpp)
+add_dependencies(${PROJECT_NAME} geometry_msgs_gencpp)
+
+add_executable(${PROJECT_NAME}_node src/fake_localization_node.cpp)
+target_link_libraries(${PROJECT_NAME}_node
+    ${PROJECT_NAME}
     ${catkin_LIBRARIES}
     ${Boost_LIBRARIES}
-    )
-
-add_dependencies(fake_localization nav_msgs_gencpp)
-add_dependencies(fake_localization geometry_msgs_gencpp)
-
-install(
-    PROGRAMS
-       static_odom_broadcaster.py
-    DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
+add_dependencies(${PROJECT_NAME}_node nav_msgs_gencpp)
+add_dependencies(${PROJECT_NAME}_node geometry_msgs_gencpp)
 
 install(
     TARGETS
-        fake_localization
-    DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+      ${PROJECT_NAME}
+      ${PROJECT_NAME}_node
+    ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+    LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+    RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
+
+install(DIRECTORY include/${PROJECT_NAME}/
+  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+)
+

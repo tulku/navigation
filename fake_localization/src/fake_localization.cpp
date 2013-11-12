@@ -70,28 +70,10 @@
 
  **/
 
-#include <ros/ros.h>
-#include <ros/time.h>
+#include "fake_localization/fake_localization.h"
 
-#include <nav_msgs/Odometry.h>
-#include <geometry_msgs/PoseArray.h>
-#include <geometry_msgs/PoseWithCovarianceStamped.h>
-
-#include <angles/angles.h>
-
-#include "ros/console.h"
-
-#include "tf/transform_broadcaster.h"
-#include "tf/transform_listener.h"
-#include "tf/message_filter.h"
-#include "message_filters/subscriber.h"
-
-
-class FakeOdomNode
-{
-  public:
-    FakeOdomNode(void)
-    {
+FakeOdomNode::FakeOdomNode(void)
+   {
       m_posePub = m_nh.advertise<geometry_msgs::PoseWithCovarianceStamped>("amcl_pose",1,true);
       m_particlecloudPub = m_nh.advertise<geometry_msgs::PoseArray>("particlecloud",1,true);
       m_tfServer = new tf::TransformBroadcaster();	
@@ -105,8 +87,8 @@ class FakeOdomNode
       private_nh.param("global_frame_id", global_frame_id_, std::string("/map"));
       private_nh.param("delta_x", delta_x_, 0.0);
       private_nh.param("delta_y", delta_y_, 0.0);
-      private_nh.param("delta_yaw", delta_yaw_, 0.0);      
-      private_nh.param("transform_tolerance", transform_tolerance_, 0.1);      
+      private_nh.param("delta_yaw", delta_yaw_, 0.0);
+      private_nh.param("transform_tolerance", transform_tolerance_, 0.1);
       m_particleCloud.header.stamp = ros::Time::now();
       m_particleCloud.header.frame_id = global_frame_id_;
       m_particleCloud.poses.resize(1);
@@ -125,41 +107,14 @@ class FakeOdomNode
       m_initPoseFilter->registerCallback(boost::bind(&FakeOdomNode::initPoseReceived, this, _1));
     }
 
-    ~FakeOdomNode(void)
+FakeOdomNode::~FakeOdomNode(void)
     {
       if (m_tfServer)
         delete m_tfServer; 
     }
 
 
-  private:
-    ros::NodeHandle m_nh;
-    ros::Publisher m_posePub;
-    ros::Publisher m_particlecloudPub;
-    message_filters::Subscriber<geometry_msgs::PoseWithCovarianceStamped>* m_initPoseSub;
-    tf::TransformBroadcaster       *m_tfServer;
-    tf::TransformListener          *m_tfListener;
-    tf::MessageFilter<geometry_msgs::PoseWithCovarianceStamped>* m_initPoseFilter;
-    tf::MessageFilter<nav_msgs::Odometry>* filter_;
-    ros::Subscriber stuff_sub_; 
-    message_filters::Subscriber<nav_msgs::Odometry>* filter_sub_;
-
-    double                         delta_x_, delta_y_, delta_yaw_;
-    bool                           m_base_pos_received;
-    double transform_tolerance_;
-
-    nav_msgs::Odometry  m_basePosMsg;
-    geometry_msgs::PoseArray      m_particleCloud;
-    geometry_msgs::PoseWithCovarianceStamped      m_currentPos;
-    tf::Transform m_offsetTf;
-
-    //parameter for what odom to use
-    std::string odom_frame_id_;
-    std::string base_frame_id_;
-    std::string global_frame_id_;
-
-  public:
-    void stuffFilter(const nav_msgs::OdometryConstPtr& odom_msg){
+void FakeOdomNode::stuffFilter(const nav_msgs::OdometryConstPtr& odom_msg){
       //we have to do this to force the message filter to wait for transforms
       //from odom_frame_id_ to base_frame_id_ to be available at time odom_msg.header.stamp
       //really, the base_pose_ground_truth should come in with no frame_id b/c it doesn't make sense
@@ -169,7 +124,7 @@ class FakeOdomNode
       filter_->add(stuff_msg);
     }
 
-    void update(const nav_msgs::OdometryConstPtr& message){
+void FakeOdomNode::update(const nav_msgs::OdometryConstPtr& message){
       tf::Pose txi;
       tf::poseMsgToTF(message->pose.pose, txi);
       txi = m_offsetTf * txi;
@@ -210,7 +165,7 @@ class FakeOdomNode
       m_particlecloudPub.publish(m_particleCloud);
     }
 
-    void initPoseReceived(const geometry_msgs::PoseWithCovarianceStampedConstPtr& msg){
+void FakeOdomNode::initPoseReceived(const geometry_msgs::PoseWithCovarianceStampedConstPtr& msg){
       tf::Pose pose;
       tf::poseMsgToTF(msg->pose.pose, pose);
 
@@ -231,15 +186,3 @@ class FakeOdomNode
       m_offsetTf = delta * m_offsetTf;
 
     }
-};
-
-int main(int argc, char** argv)
-{
-  ros::init(argc, argv, "fake_localization");
-
-  FakeOdomNode odom;
-
-  ros::spin();
-
-  return 0;
-}
