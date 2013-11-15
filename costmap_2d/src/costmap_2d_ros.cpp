@@ -113,16 +113,22 @@ Costmap2DROS::Costmap2DROS(std::string name, tf::TransformListener& tf) :
   {
     XmlRpc::XmlRpcValue my_list;
     private_nh.getParam("plugins", my_list);
-    for (int32_t i = 0; i < my_list.size(); ++i)
-    {
-      std::string pname = static_cast<std::string>(my_list[i]["name"]);
-      std::string type = static_cast<std::string>(my_list[i]["type"]);
-      ROS_INFO("Using plugin \"%s\"", pname.c_str());
 
-      boost::shared_ptr<Layer> plugin = plugin_loader_.createInstance(type);
-      layered_costmap_->addPlugin(plugin);
-      plugin->initialize(layered_costmap_, name + "/" + pname, &tf_);
+    boost::shared_ptr<Layer> footprint (new costmap_2d::FootprintLayer());
+    layered_costmap_->addPlugin(footprint);
+    footprint->initialize(layered_costmap_, name + "/" + std::string("footprint_layer"), &tf_);
+    boost::shared_ptr<Layer> inflation (new costmap_2d::InflationLayer());
+    layered_costmap_->addPlugin(inflation);
+    inflation->initialize(layered_costmap_, name + "/" + std::string("inflation_layer"), &tf_);
+    if(name == "global_costmap"){
+      boost::shared_ptr<Layer> static_ (new costmap_2d::StaticLayer());
+      layered_costmap_->addPlugin(static_);
+      static_->initialize(layered_costmap_, name + "/" + std::string("static_layer"), &tf_);
     }
+    boost::shared_ptr<Layer> voxel (new costmap_2d::VoxelLayer());
+    layered_costmap_->addPlugin(voxel);
+    voxel->initialize(layered_costmap_, name + "/" + std::string("voxel_layer"), &tf_);
+
   }
 
   // subscribe to the footprint topic
