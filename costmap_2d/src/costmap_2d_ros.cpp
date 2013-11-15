@@ -119,7 +119,28 @@ Costmap2DROS::Costmap2DROS(std::string name, tf::TransformListener& tf) :
       std::string type = static_cast<std::string>(my_list[i]["type"]);
       ROS_INFO("Using plugin \"%s\"", pname.c_str());
 
-      boost::shared_ptr<Layer> plugin = plugin_loader_.createInstance(type);
+      std::string footprint ("footprint_layer");
+      std::string inflation ("inflation_layer");
+      std::string obstacle ("obstacle_layer");
+      std::string static_ ("static_layer");
+      std::string voxel ("voxel_layer");
+      boost::shared_ptr<Layer> plugin;
+      if (type.compare(footprint) == 0) {
+        plugin.reset(new costmap_2d::FootprintLayer());
+      }
+      else if (type.compare(inflation) == 0) {
+        plugin.reset(new costmap_2d::InflationLayer());
+      }
+      else if (type.compare(obstacle) == 0) {
+        plugin.reset(new costmap_2d::ObstacleLayer());
+      }
+      else if (type.compare(static_) == 0) {
+        plugin.reset(new costmap_2d::StaticLayer());
+      }
+      else if (type.compare(voxel) == 0) {
+        plugin.reset(new costmap_2d::VoxelLayer());
+      }
+
       layered_costmap_->addPlugin(plugin);
       plugin->initialize(layered_costmap_, name + "/" + pname, &tf_);
     }

@@ -47,6 +47,12 @@
 #include <dynamic_reconfigure/server.h>
 #include <pluginlib/class_loader.h>
 
+#include <costmap_2d/footprint_layer.h>
+#include <costmap_2d/inflation_layer.h>
+#include <costmap_2d/obstacle_layer.h>
+#include <costmap_2d/static_layer.h>
+#include <costmap_2d/voxel_layer.h>
+
 class SuperValue : public XmlRpc::XmlRpcValue
 {
 public:
