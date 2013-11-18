@@ -36,7 +36,6 @@
  *         David V. Lu!!
  *********************************************************************/
 #include<global_planner/planner_core.h>
-#include <pluginlib/class_list_macros.h>
 #include <tf/transform_listener.h>
 #include <costmap_2d/cost_values.h>
 #include <costmap_2d/costmap_2d.h>
@@ -48,7 +47,6 @@
 #include <global_planner/quadratic_calculator.h>
 
 //register this planner as a BaseGlobalPlanner plugin
-PLUGINLIB_DECLARE_CLASS(global_planner, PlannerCore, global_planner::PlannerCore, nav_core::BaseGlobalPlanner)
 
 namespace global_planner {
 

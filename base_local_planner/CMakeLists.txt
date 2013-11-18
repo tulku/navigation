@@ -11,7 +11,6 @@ find_package(catkin REQUIRED
             pcl_conversions
             rostest
             costmap_2d
-            pluginlib
             angles
         )
 
@@ -59,7 +58,6 @@ catkin_package(
         dynamic_reconfigure
         message_generation
         tf
-        pluginlib
         costmap_2d
         nav_core
         angles

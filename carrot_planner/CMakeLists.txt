@@ -8,7 +8,6 @@ find_package(catkin REQUIRED
             nav_core
             costmap_2d
             base_local_planner
-            pluginlib
         )
 
 include_directories(
@@ -22,7 +21,6 @@ catkin_package(
     LIBRARIES carrot_planner
     CATKIN_DEPENDS
         roscpp
-        pluginlib
         costmap_2d
         base_local_planner
         nav_core

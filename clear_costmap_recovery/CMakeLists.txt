@@ -5,7 +5,6 @@ find_package(catkin REQUIRED
         COMPONENTS
             costmap_2d
             nav_core
-            pluginlib
             roscpp
             tf
         )
@@ -26,7 +25,6 @@ catkin_package(
     CATKIN_DEPENDS
         costmap_2d
         nav_core
-        pluginlib
         roscpp
         tf
 )

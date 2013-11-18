@@ -41,13 +41,11 @@
 
 #include <ros/console.h>
 
-#include <pluginlib/class_list_macros.h>
 
 #include <base_local_planner/goal_functions.h>
 #include <nav_msgs/Path.h>
 
 //register this planner as a BaseLocalPlanner plugin
-PLUGINLIB_EXPORT_CLASS(dwa_local_planner::DWAPlannerROS, nav_core::BaseLocalPlanner)
 
 namespace dwa_local_planner {
 

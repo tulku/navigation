@@ -21,7 +21,6 @@
     <build_depend>roscpp</build_depend>
     <build_depend>tf</build_depend>
     <build_depend>rospy</build_depend>
-    <build_depend>pluginlib</build_depend>
     <build_depend>costmap_2d</build_depend>
     <build_depend>voxel_grid</build_depend>
     <build_depend>angles</build_depend>
@@ -40,7 +39,6 @@
     <run_depend>roscpp</run_depend>
     <run_depend>tf</run_depend>
     <run_depend>rospy</run_depend>
-    <run_depend>pluginlib</run_depend>
     <run_depend>costmap_2d</run_depend>
     <run_depend>voxel_grid</run_depend>
     <run_depend>angles</run_depend>

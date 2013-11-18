@@ -2,8 +2,6 @@
 #include<costmap_2d/footprint.h>
 #include<string>
 #include<sstream>
-#include <pluginlib/class_list_macros.h>
-PLUGINLIB_EXPORT_CLASS(costmap_2d::FootprintLayer, costmap_2d::Layer)
 
 namespace costmap_2d
 {

@@ -8,7 +8,6 @@ find_package(catkin REQUIRED
         costmap_2d
         actionlib_msgs
         std_msgs
-        pluginlib
         )
 
 
@@ -29,7 +28,6 @@ catkin_package(
     LIBRARIES move_slow_and_clear
     CATKIN_DEPENDS
         roscpp
-        pluginlib
         nav_core
 )
 

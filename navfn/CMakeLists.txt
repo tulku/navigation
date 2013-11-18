@@ -9,7 +9,6 @@ find_package(catkin REQUIRED
         nav_msgs
         pcl_conversions
         pcl_ros
-        pluginlib
         roscpp
         tf
         visualization_msgs
@@ -50,7 +49,6 @@ catkin_package(
     CATKIN_DEPENDS
         nav_core
         roscpp
-        pluginlib
 )
 
 add_library (navfn src/navfn.cpp src/navfn_ros.cpp)

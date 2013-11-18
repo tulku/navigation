@@ -7,7 +7,6 @@ find_package(catkin REQUIRED
             tf
             costmap_2d
             nav_core
-            pluginlib
             base_local_planner
         )
 
@@ -24,7 +23,6 @@ catkin_package(
     LIBRARIES rotate_recovery
     CATKIN_DEPENDS
         roscpp
-        pluginlib
 )
 
 add_library(rotate_recovery src/rotate_recovery.cpp)

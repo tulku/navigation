@@ -8,7 +8,6 @@ find_package(catkin REQUIRED
             dynamic_reconfigure
             nav_core
             nav_msgs
-            pluginlib
             pcl_conversions
             roscpp
             tf
@@ -36,7 +35,6 @@ catkin_package(
     LIBRARIES dwa_local_planner
     CATKIN_DEPENDS
         dynamic_reconfigure
-        pluginlib
         roscpp
 )
 

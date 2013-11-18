@@ -9,7 +9,6 @@ find_package(catkin REQUIRED
     nav_core
     navfn
     nav_msgs
-    pluginlib
     roscpp
     tf
 )
@@ -28,7 +27,6 @@ catkin_package(
     nav_core
     navfn
     nav_msgs
-    pluginlib
     roscpp
     tf
 )
