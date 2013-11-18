@@ -115,6 +115,7 @@ Costmap2DROS::Costmap2DROS(std::string name, tf::TransformListener& tf) :
     private_nh.getParam("plugins", my_list);
     for (int32_t i = 0; i < my_list.size(); ++i)
     {
+      bool new_layer = false;
       std::string pname = static_cast<std::string>(my_list[i]["name"]);
       std::string type = static_cast<std::string>(my_list[i]["type"]);
       ROS_INFO("Using plugin \"%s\"", pname.c_str());
@@ -127,22 +128,29 @@ Costmap2DROS::Costmap2DROS(std::string name, tf::TransformListener& tf) :
       boost::shared_ptr<Layer> plugin;
       if (type.compare(footprint) == 0) {
         plugin.reset(new costmap_2d::FootprintLayer());
+        new_layer = true;
       }
       else if (type.compare(inflation) == 0) {
         plugin.reset(new costmap_2d::InflationLayer());
+        new_layer = true;
       }
       else if (type.compare(obstacle) == 0) {
         plugin.reset(new costmap_2d::ObstacleLayer());
+        new_layer = true;
       }
       else if (type.compare(static_) == 0) {
         plugin.reset(new costmap_2d::StaticLayer());
+        new_layer = true;
       }
       else if (type.compare(voxel) == 0) {
         plugin.reset(new costmap_2d::VoxelLayer());
+        new_layer = true;
       }
 
-      layered_costmap_->addPlugin(plugin);
-      plugin->initialize(layered_costmap_, name + "/" + pname, &tf_);
+      if (new_layer) {
+        layered_costmap_->addPlugin(plugin);
+        plugin->initialize(layered_costmap_, name + "/" + pname, &tf_);
+      }
     }
   }
 
