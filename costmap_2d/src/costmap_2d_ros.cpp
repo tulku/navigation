@@ -111,45 +111,23 @@ Costmap2DROS::Costmap2DROS(std::string name, tf::TransformListener& tf) :
   {
     XmlRpc::XmlRpcValue my_list;
     private_nh.getParam("plugins", my_list);
-    for (int32_t i = 0; i < my_list.size(); ++i)
-    {
-      bool new_layer = false;
-      std::string pname = static_cast<std::string>(my_list[i]["name"]);
-      std::string type = static_cast<std::string>(my_list[i]["type"]);
-      ROS_INFO("Using plugin \"%s\"", pname.c_str());
 
-      std::string footprint ("footprint_layer");
-      std::string inflation ("inflation_layer");
-      std::string obstacle ("obstacle_layer");
-      std::string static_ ("static_layer");
-      std::string voxel ("voxel_layer");
-      boost::shared_ptr<Layer> plugin;
-      if (type.compare(footprint) == 0) {
-        plugin.reset(new costmap_2d::FootprintLayer());
-        new_layer = true;
-      }
-      else if (type.compare(inflation) == 0) {
-        plugin.reset(new costmap_2d::InflationLayer());
-        new_layer = true;
-      }
-      else if (type.compare(obstacle) == 0) {
-        plugin.reset(new costmap_2d::ObstacleLayer());
-        new_layer = true;
-      }
-      else if (type.compare(static_) == 0) {
-        plugin.reset(new costmap_2d::StaticLayer());
-        new_layer = true;
-      }
-      else if (type.compare(voxel) == 0) {
-        plugin.reset(new costmap_2d::VoxelLayer());
-        new_layer = true;
-      }
+    boost::shared_ptr<Layer> footprint (new costmap_2d::FootprintLayer());
+    layered_costmap_->addPlugin(footprint);
+    footprint->initialize(layered_costmap_, name + "/" + std::string("footprint_layer"), &tf_);
+    boost::shared_ptr<Layer> inflation (new costmap_2d::InflationLayer());
+    layered_costmap_->addPlugin(inflation);
+    inflation->initialize(layered_costmap_, name + "/" + std::string("inflation_layer"), &tf_);
+    boost::shared_ptr<Layer> obstacle (new costmap_2d::ObstacleLayer());
+    layered_costmap_->addPlugin(obstacle);
+    obstacle->initialize(layered_costmap_, name + "/" + std::string("obstacle_layer"), &tf_);
+    boost::shared_ptr<Layer> static_ (new costmap_2d::StaticLayer());
+    layered_costmap_->addPlugin(static_);
+    static_->initialize(layered_costmap_, name + "/" + std::string("static_layer"), &tf_);
+    boost::shared_ptr<Layer> voxel (new costmap_2d::VoxelLayer());
+    layered_costmap_->addPlugin(voxel);
+    voxel->initialize(layered_costmap_, name + "/" + std::string("voxel_layer"), &tf_);
 
-      if (new_layer) {
-        layered_costmap_->addPlugin(plugin);
-        plugin->initialize(layered_costmap_, name + "/" + pname, &tf_);
-      }
-    }
   }
 
   // subscribe to the footprint topic
