@@ -118,12 +118,11 @@ Costmap2DROS::Costmap2DROS(std::string name, tf::TransformListener& tf) :
     boost::shared_ptr<Layer> inflation (new costmap_2d::InflationLayer());
     layered_costmap_->addPlugin(inflation);
     inflation->initialize(layered_costmap_, name + "/" + std::string("inflation_layer"), &tf_);
-    boost::shared_ptr<Layer> obstacle (new costmap_2d::ObstacleLayer());
-    layered_costmap_->addPlugin(obstacle);
-    obstacle->initialize(layered_costmap_, name + "/" + std::string("obstacle_layer"), &tf_);
-    boost::shared_ptr<Layer> static_ (new costmap_2d::StaticLayer());
-    layered_costmap_->addPlugin(static_);
-    static_->initialize(layered_costmap_, name + "/" + std::string("static_layer"), &tf_);
+    if(name == "global_costmap"){
+      boost::shared_ptr<Layer> static_ (new costmap_2d::StaticLayer());
+      layered_costmap_->addPlugin(static_);
+      static_->initialize(layered_costmap_, name + "/" + std::string("static_layer"), &tf_);
+    }
     boost::shared_ptr<Layer> voxel (new costmap_2d::VoxelLayer());
     layered_costmap_->addPlugin(voxel);
     voxel->initialize(layered_costmap_, name + "/" + std::string("voxel_layer"), &tf_);
