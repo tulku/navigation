@@ -67,7 +67,7 @@ install(TARGETS navfn navfn_node
        ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
        )
 
-install(DIRECTORY include/
+install(DIRECTORY include/navfn/
     DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
 )
 
