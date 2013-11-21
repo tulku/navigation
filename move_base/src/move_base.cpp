@@ -120,7 +120,7 @@ namespace move_base {
     //check if a non fully qualified name has potentially been passed in
     tc_.reset(new dwa_local_planner::DWAPlannerROS());
     ROS_INFO("Created local_planner %s", "dwa_local_planner");
-    tc_->initialize(std::string("dwa_local_planner"), &tf_, controller_costmap_ros_);
+    tc_->initialize(std::string("TrajectoryPlannerROS"), &tf_, controller_costmap_ros_);
 
     // Start actively updating costmaps based on sensor data
     planner_costmap_ros_->start();
